@@ -92,11 +92,11 @@ async function loadPricing() {
                 </p>
 
                 <a
-                    href="https://sevn.ly/xwSJTAfy"
-                    target="_blank"
-                    class="btn btn-solid">
-                    Book Now
-                </a>
+    href="${item.booking_link}"
+    target="_blank"
+    class="btn btn-solid">
+    Book Now
+</a>
 
             </div>
         `;
