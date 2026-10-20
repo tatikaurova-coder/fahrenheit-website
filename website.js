@@ -163,4 +163,46 @@ window.addEventListener("DOMContentLoaded", () => {
 
     loadExperience();
 
+    loadSpaWellnessPackages();
+
 });
+
+// SPA & WELLNESS PACKAGES
+async function loadSpaWellnessPackages() {
+  console.log("Loading Spa & Wellness Packages...");
+
+  const { data, error } = await supabase
+    .from("spa_wellness_packages")
+    .select("*")
+    .eq("active", true)
+    .order("sort_order", { ascending: true });
+
+  if (error) {
+    console.error("Error loading spa packages:", error);
+    return;
+  }
+
+  const container = document.getElementById("spa-wellness-grid");
+
+  if (!container) {
+    console.error("Spa section container not found in index.html");
+    return;
+  }
+
+  container.innerHTML = data.map(item => `
+    <div class="price-card">
+      <h3>${item.title}</h3>
+      <div class="price">฿${item.price.toLocaleString("en-US")}
+        <span>/ person</span>
+      </div>
+      <p>${item.description || ""}</p>
+      <p>${item.duration || ""}</p>
+      <a
+        href="${item.booking_link || "#"}"
+        class="book-button"
+        target="_blank"
+        rel="noopener noreferrer"
+      >BOOK NOW</a>
+    </div>
+  `).join("");
+}
